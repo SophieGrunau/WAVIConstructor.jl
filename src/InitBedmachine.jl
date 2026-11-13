@@ -25,7 +25,7 @@ Tuple of grid structures (Gh, Gu, Gv, Gc) with loaded data
 """
 function init_bedmachine(params)
     bed_source = get(params, :bed_source, BedMachineV3())
-    bed_file = get(params, :bed_file, default_path(BedMachineV3()))
+    bed_file = get(params, :bed_file, default_path(bed_source))
 
     bm = load_data(bed_source, bed_file)
     bed = bm.bed

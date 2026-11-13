@@ -94,6 +94,38 @@ function load_data(::BedMachineV3, filename::String)
     end
 end
 
+"""
+    load_data(::BedMachineGreenland, filename::String)
+
+Load BedMachine Greenland NetCDF variables.
+
+Same variables and layout as BedMachine Antarctica. Coordinates are
+converted from Int32 to Float64, and `bed` to a plain Float32 array
+(the file's fill value makes it load as `Union{Missing, Float32}`;
+`nomissing` errors if any value is actually missing).
+
+# Returns
+A `NamedTuple`: `(bed, x, y, geoid, mask, thickness, surface)`
+"""
+function load_data(::BedMachineGreenland, filename::String)
+    ds = NCDataset(filename)
+    try
+        bed = nomissing(Array(ds["bed"]))
+        x = Float64.(Array(ds["x"]))
+        y = Float64.(Array(ds["y"]))
+        geoid = Array(ds["geoid"])
+        mask = Array(ds["mask"])
+        surface = Array(ds["surface"])
+        thickness = Array(ds["thickness"])
+        return (
+            bed = bed, x = x, y = y, geoid = geoid, mask = mask,
+            thickness = thickness, surface = surface,
+        )
+    finally
+        close(ds)
+    end
+end
+
 
 """
     load_data(::BISICLESTemps, filename::String; scale_xy::Real=1000)

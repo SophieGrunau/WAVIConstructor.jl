@@ -16,7 +16,7 @@ using .ParamHelpers: ConstructorParams, default_constructor_params, minimal_cons
 using .DataSources: DataSource, SourceConfig, default_path, NoData,
     BedSource, SurfaceTempSource, TemperatureSource, VelocitySource,
     AccumulationSource, DhDtSource, BasinSource,
-    BedMachineV3, ALBMAPv1, FrankTemps, BISICLESTemps,
+    BedMachineV3, BedMachineGreenland, ALBMAPv1, FrankTemps, BISICLESTemps,
     MEaSUREs, ArthernAccumulation, SmithDhdt, ZwallyBasins
 using .DataLoading: load_data, interpolate_to_grid, interpolate_temperature
 using .OutputWriting: write_output, write_binary_files, write_netcdf_file
@@ -26,7 +26,7 @@ export ConstructorParams, default_constructor_params, minimal_constructor_params
 export DataSource, SourceConfig, default_path, NoData
 export BedSource, SurfaceTempSource, TemperatureSource, VelocitySource
 export AccumulationSource, DhDtSource, BasinSource
-export BedMachineV3, ALBMAPv1, FrankTemps, BISICLESTemps
+export BedMachineV3, BedMachineGreenland, ALBMAPv1, FrankTemps, BISICLESTemps
 export MEaSUREs, ArthernAccumulation, SmithDhdt, ZwallyBasins
 export load_data, interpolate_to_grid, interpolate_temperature
 export write_output, write_binary_files, write_netcdf_file

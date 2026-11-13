@@ -15,7 +15,7 @@ export DataSource, SourceConfig, default_path
 export BedSource, SurfaceTempSource, TemperatureSource, VelocitySource
 export AccumulationSource, DhDtSource, BasinSource
 # Concrete source singletons
-export BedMachineV3, ALBMAPv1, FrankTemps, BISICLESTemps
+export BedMachineV3, BedMachineGreenland, ALBMAPv1, FrankTemps, BISICLESTemps
 export MEaSUREs, ArthernAccumulation, SmithDhdt, ZwallyBasins
 # Cross-cutting sentinel
 export NoData
@@ -76,6 +76,10 @@ default_path(::NoData) = ""
 """BedMachine Antarctica v3 bed topography."""
 struct BedMachineV3 <: BedSource end
 default_path(::BedMachineV3) = "Data/BedMachineAntarctica-v3.nc"
+
+"""BedMachine Greenland v7 bed topography."""
+struct BedMachineGreenland <: BedSource end
+default_path(::BedMachineGreenland) = "Data/BedMachineGreenland-v7.nc"
 
 """ALBMAP v1 Antarctic mean-annual surface temperature."""
 struct ALBMAPv1 <: SurfaceTempSource end
