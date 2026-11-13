@@ -1,4 +1,4 @@
-# WAVIConstructor.jl - BedMachine v3 data initialization
+# WAVIConstructor.jl - BedMachine data initialization
 # Julia port of initBedmachineV3.m
 
 module InitBedMachine
@@ -14,7 +14,7 @@ using WAVIConstructor.DataLoading: load_data, interpolate_to_grid, interpolate_r
 """
     init_bedmachine(params)
 
-Initialise computational grids and load all geophysical data using BedMachine v3.
+Initialise computational grids and load all geophysical data using BedMachine.
 Julia port of the MATLAB initBedmachineV3 function.
 
 # Arguments
@@ -37,7 +37,7 @@ function init_bedmachine(params)
     s = bm.surface
 
     # Flip arrays to match MATLAB's fliplr (reverse along dimension 2 = columns/y-axis).
-    # BedMachine v3 stores y in descending order; flip y too so the coordinate
+    # BedMachine stores y in descending order; flip y too so the coordinate
     # vector stays consistent with the flipped data arrays (ascending y).
     bed = reverse(bed, dims = 2)
     geoid = reverse(geoid, dims = 2)
@@ -46,7 +46,7 @@ function init_bedmachine(params)
     h = reverse(h, dims = 2)
     y = reverse(y)
 
-    # Create rock mask (mask=1 in BedMachine v3 indicates rock
+    # Create rock mask (mask=1 in BedMachine indicates rock)
     rockmask = zeros(size(mask))
     rockmask[mask .== 1] .= 1
 
