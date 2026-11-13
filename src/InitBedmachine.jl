@@ -55,21 +55,25 @@ function init_bedmachine(params)
     dy_full = y[2] - y[1]
     nx_full = length(x)
     ny_full = length(y)
-    x0_full = x[1] - 0.5 * dx_full
-    y0_full = y[1] - 0.5 * dy_full
 
     x_full = x
     y_full = y
 
-    # Subsampling
-    sub_samp = get(params, :sub_samp, 8)
-    sub_samp_index_x = get(params, :sub_samp_index_x, 0)
-    sub_samp_index_y = get(params, :sub_samp_index_y, 0)
-
-    # Use the whole BedMachine grid, keeping every (2 * sub_samp)-th point.
+    # Grid spacing: keep every `step`-th BedMachine point, with `step` chosen
+    # so that step * dx_full is as close as possible to the requested dx.
     # The domain is cut to the chosen basins later (SetupData.jl).
-    isub = 1:(2 * sub_samp):nx_full
-    jsub = 1:(2 * sub_samp):ny_full
+    if dx_full != dy_full
+        error("BedMachine grid is not square (dx = $dx_full m, dy = $dy_full m); only square cells are supported.")
+    end
+
+    dx = get(params, :dx, 10000.0)
+    step = max(1, round(Int, dx / dx_full))
+    if step * dx_full != dx
+        @warn "Requested dx = $dx m is not a multiple of the BedMachine spacing ($dx_full m); using $(step * dx_full) m."
+    end
+
+    isub = 1:step:nx_full
+    jsub = 1:step:ny_full
 
     # Subsample all arrays
     bed = bed[isub, jsub]
