@@ -61,21 +61,15 @@ function init_bedmachine(params)
     x_full = x
     y_full = y
 
-    i_pole = floor(Int, -x0_full / dx_full + 0.5)
-    j_pole = floor(Int, -y0_full / dy_full + 0.5)
-
-
     # Subsampling
     sub_samp = get(params, :sub_samp, 8)
     sub_samp_index_x = get(params, :sub_samp_index_x, 0)
     sub_samp_index_y = get(params, :sub_samp_index_y, 0)
 
-    # Domain size parameters (these may need adjustment for ALBMAP)
-    domain_half_width = 2819  # Half-width in grid points
-    domain_half_height = 2419  # Half-height in grid points
-
-    isub = i_pole .+ 2 * sub_samp .* (-floor(Int, (domain_half_width * 2) / (2 * sub_samp)):floor(Int, (domain_half_width * 2) / (2 * sub_samp)))
-    jsub = j_pole .+ 2 * sub_samp .* (-floor(Int, (domain_half_height * 2) / (2 * sub_samp)):floor(Int, (domain_half_height * 2) / (2 * sub_samp)))
+    # Use the whole BedMachine grid, keeping every (2 * sub_samp)-th point.
+    # The domain is cut to the chosen basins later (SetupData.jl).
+    isub = 1:(2 * sub_samp):nx_full
+    jsub = 1:(2 * sub_samp):ny_full
 
     # Subsample all arrays
     bed = bed[isub, jsub]
